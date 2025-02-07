@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Grid Suite">
+    
+    <!-- Add Allure Listener -->
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="Google Test - Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="tests.SampleTest"/>
+        </classes>
+    </test>
+
+    <test name="Google Test - Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="tests.SampleTest"/>
+        </classes>
+    </test>
+
+</suite>
