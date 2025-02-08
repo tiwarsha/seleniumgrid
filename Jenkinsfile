@@ -16,11 +16,13 @@ pipeline {
 
         stage('Publish TestNG Reports') {
             steps {
-                publishHTML([ 
-                    reportDir: 'test-output',  
-                    reportFiles: 'index.html',  
-                    reportName: 'TestNG Report',  
-                    keepAll: true
+                publishHTML([
+                    allowMissing: false,  
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'test-output',
+                    reportFiles: 'index.html',
+                    reportName: 'TestNG Report'
                 ])
             }
         }
