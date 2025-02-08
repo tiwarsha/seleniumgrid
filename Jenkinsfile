@@ -10,20 +10,29 @@ pipeline {
 
         stage('Run Selenium Tests') {
             steps {
-                bat 'run-tests.bat'  // Execute the batch script
+                bat 'run-tests.bat'  // Run tests
             }
         }
 
         stage('Publish TestNG Reports') {
             steps {
-                publishHTML([
-                    allowMissing: false,  
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'test-output',
-                    reportFiles: 'index.html',
-                    reportName: 'TestNG Report'
-                ])
+                script {
+                    def reportPath = "C:/ProgramData/Jenkins/.jenkins/workspace/SeleniumGrid-Pipeline/test-output"
+                    
+                    // Check if test-output exists before publishing
+                    if (fileExists(reportPath)) {
+                        publishHTML([
+                            allowMissing: true,  // Allow Jenkins to continue even if the report is missing
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: 'test-output',
+                            reportFiles: 'index.html',
+                            reportName: 'TestNG Report'
+                        ])
+                    } else {
+                        echo "⚠️ Skipping TestNG report publishing as test-output directory does not exist."
+                    }
+                }
             }
         }
     }
